@@ -82,7 +82,7 @@
                     $source_title .= 'HL';
                 }
             } elseif ($major==6) {
-                $source_title .= $section['title'];
+                $source_title .= $data['section_title'];
             } else {
                 $source_title .= 'HL';
             }
@@ -106,6 +106,7 @@
     <div class="debate-speech" id="g<?= gid_to_anchor($speech['gid']) ?>">
         <div class="full-page__row">
             <a name="g<?= gid_to_anchor($speech['gid']) ?>"></a>
+
           <?php if(isset($speech['speaker']) && count($speech['speaker']) > 0) { ?>
             <h2 class="debate-speech__speaker">
                 <?php
@@ -145,23 +146,28 @@
                     <small class="debate-speech__speaker__position"><?= $speaker_position ?></small>
                 </a>
             </h2>
+            <?php if (!isset($previous_speech_time) || $previous_speech_time != $speech['htime']) { ?>
+                <div class="debate-speech__meta">
+                    <div class="time">
+                        <a href="<?= $speech['listurl'] ?>">
+                          <?php if ($speech['htime']) { ?>
+                            <?= format_time($speech['htime'], 'g:i a') ?>,
+                          <?php } ?>
+                            <?= format_date($speech['hdate'], 'jS F Y') ?>
+                        </a>
+                    </div>
+                </div>
+              <?php } ?>
           <?php } ?>
             <div class="debate-speech__content"><?=$body ?></div>
-            <ul class="debate-speech__meta">
-              <?php if (!isset($previous_speech_time) || $previous_speech_time != $speech['htime']) { ?>
-                <li class="time">
-                    <a href="<?= $speech['listurl'] ?>">
-                        <?= format_time($speech['htime'], 'g:i a') ?>,
-                        <?= format_date($speech['hdate'], 'jS F Y') ?>
-                    </a>
-                </li>
-              <?php } ?>
+            <ul class="debate-speech__meta debate-speech__links">
+
                 <li class="link-to-speech"><a href="<?= $speech['listurl'] ?>">Link to this speech</a></li>
 <?php
                 if ($source_url) {
 ?>
                 <li class="link-to-hansard"><a href="<?=$source_url ?>"><?=$source_text ?></a>
-                <?php if ($source_title) { ?> (<?=$source_title ?>)<?php } ?></li>
+                <?php if ($source_title) { ?><span> (<?=$source_title ?>)</span><?php } ?></li>
 <?php
                 }
 ?>
