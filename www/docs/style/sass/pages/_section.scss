@@ -6,9 +6,12 @@ span.hi {
   background: #35322E url(/images/header-debates-uk.jpg) center center no-repeat;
   background-size: cover;
   color: #fff;
-
   padding-top: 20px;
   padding-bottom: 20px;
+
+  .debate-header__content {
+    position: relative;
+  }
 
   h1 {
     color: #fff;
@@ -32,28 +35,7 @@ span.hi {
   p.cta {
     margin-bottom: -15px;
 
-    .button {
-      padding: 5px 14px;
-      margin: 0 15px 15px 0;
-      font-size: 16px;
-      font-weight: normal;
-    }
-  }
 
-  .button.subtle {
-    border: 1px solid #ccc;
-    background-color: transparent;
-    background-color: rgba(0,0,0,0.1);
-    padding: 4px 13px;
-
-    -webkit-transition: all 300ms ease-out;
-    -moz-transition: all 300ms ease-out;
-    transition: all 300ms ease-out;
-
-    &:focus, &:hover {
-      background-color: rgba(100,100,100,0.5);
-      border-color: #fff;
-    }
   }
 
   @media (min-width: $large-screen) {
@@ -67,10 +49,6 @@ span.hi {
 
     p.lead {
       font-size: 24px;
-    }
-
-    p.cta .button {
-      font-size: 18px;
     }
   }
 }
@@ -293,4 +271,81 @@ span.hi {
     }
   }
 
+}
+
+.debate-footer__content {
+  position: relative;
+}
+
+.navigate-debates {
+  @media screen and (min-width: $medium-screen) {
+      position: absolute;
+      right: 1em;
+      bottom: 16px;
+  }
+
+  a[rel="prev"] {
+    -moz-border-radius: 3px 3px 0 0;
+    -webkit-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+    border-bottom-width: 0;
+    margin-bottom: 0;
+  }
+
+  a[rel="next"] {
+    -moz-border-radius: 0 0 3px 3px;
+    -webkit-border-radius: 0 0 3px 3px;
+    border-radius: 0 0 3px 3px;
+  }
+
+  @media screen and (min-width: 22.3125em) {
+    .button {
+      display: inline-block;
+      margin-bottom: 0;
+    }
+
+    a[rel="prev"] {
+      -moz-border-radius: 3px 0 0 3px;
+      -webkit-border-radius: 3px 0 0 3px;
+      border-radius: 3px 0 0 3px;
+      border-right: 0;
+      border-bottom-width: 1px;
+    }
+
+    a[rel="next"] {
+      -moz-border-radius: 0 3px 3px 0;
+      -webkit-border-radius: 0 3px 3px 0;
+      border-radius: 0 3px 3px 0;
+    }
+  }
+
+}
+
+.debate-header  {
+
+  .navigate-debates {
+    margin-top: 1em;
+    @media screen and (min-width: $medium-screen) {
+      bottom: 16px;
+    }
+
+    @media screen and (min-width: $large-screen) {
+      bottom: 15px;
+    }
+  }
+
+  .button.tertiary {
+    background-color: rgba(0,0,0,0.2);
+    display: block;
+    border-color: #ccc; /* older browsers */
+    border: 1px solid rgba(255,255,255,0.5);
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: rgba(0,0,0,0.7);
+    }
+    @media screen and (min-width: 22.3125em) {
+      display: inline-block;
+    }
+  }
 }
