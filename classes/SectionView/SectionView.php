@@ -356,6 +356,7 @@ class SectionView {
         // But the comment typeface is smaller, so we scale things slightly too...
         $targetsize = round(strlen($row['body']) * 0.6);
 
+        $linktext = '';
         if ($targetsize > strlen($comment['body'])) {
             // This comment will fit in its entirety.
             $commentbody = $comment['body'];
@@ -378,11 +379,12 @@ class SectionView {
             }
         }
 
-        $html = '<blockquote><p>' . prepare_comment_for_display($commentbody) . '</p><cite>Submitted by ' . _htmlentities($comment['username']) . '</cite></small></blockquote>' ;
-        if (isset($linktext)) {
-            $html .= ' <a class="morecomments" href="' . $row['commentsurl'] . '#c' . $comment['comment_id'] . '" title="See any annotations posted about this">' . $linktext . '</a>';
-        }
-        $html = '<div class="comment-teaser">' . $html . '</div>';
-        return $html;
+        return array(
+            'body' => prepare_comment_for_display($commentbody),
+            'username' => _htmlentities($comment['username']),
+            'linktext' => $linktext,
+            'commentsurl' => $row['commentsurl'],
+            'comment_id' => $comment['comment_id'],
+        );
     }
 }

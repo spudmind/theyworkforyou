@@ -208,8 +208,12 @@
             <?php
             } # End in context link
 
-            if (isset($speech['commentteaser'])) {
-                echo $speech['commentteaser'];
+            if (isset($speech['commentteaser'])) { ?>
+            <div class="comment-teaser">
+                <blockquote><p><?= $speech['commentteaser']['body'] ?></p><cite>Submitted by <?= $speech['commentteaser']['username'] ?></cite></small></blockquote>
+                <a class="morecomments" href="<?= $speech['commentteaser']['commentsurl'] ?>#c<?= $speech['commentteaser']['comment_id'] ?>" title="See any annotations posted about this"><?= $speech['commentteaser']['linktext'] ?></a>
+             </div>
+            <?php
             }
             if (isset($speech['mentions'])) {
                 echo $speech['mentions'];
