@@ -8,19 +8,40 @@
         <div class="debate-header__content">
             <h1><?= $heading ?></h1>
             <p class="lead">
-                <?= $intro ?> <?= $location ?><br>
+                <?= $intro ?> <?= $location ?>
                 <?php if ($debate_time_human) { ?>at <?= $debate_time_human ?><?php } ?>
                 on <a href="<?= $debate_day_link ?>"><?= $debate_day_human ?></a>.
             </p>
             <p class="cta">
-              <?php if(isset($full_debate_url)) { ?>
-                <a class="button subtle" href="<?= $full_debate_url ?>">Show full debate</a>
-              <?php } ?>
                 <a class="button alert" href="/alerts/?alertsearch=<?= urlencode($email_alert_text) ?>">Alert me about debates like this</a>
             </p>
         </div>
     </div>
+    <nav class="debate-navigation" role="navigation">
+        <div class="full-page__row">
+            <div class="debate-navigation__pagination">
+                <?php if (isset($nextprev['prev'])) { ?>
+                <div class="debate-navigation__previous-debate">
+                    <a href="<?= $nextprev['prev']['url'] ?>" rel="prev">&laquo; <?= $nextprev['prev']['body'] ?></a>
+                </div>
+                <?php } ?>
+
+                <?php if (isset($nextprev['up'])) { ?>
+                <div class="debate-navigation__all-debates">
+                    <a href="<?= $nextprev['up']['url'] ?>" rel="up"><?= $nextprev['up']['body'] ?></a>
+                </div>
+                <?php } ?>
+
+                <?php if (isset($nextprev['next'])) { ?>
+                <div class="debate-navigation__next-debate">
+                    <a href="<?= $nextprev['next']['url'] ?>" rel="next"><?= $nextprev['next']['body'] ?> &raquo;</a>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+    </nav>
 </div>
+
 <div class="full-page">
 
   <?php foreach($data['rows'] as $speech) { ?>
@@ -168,13 +189,15 @@
             <div class="debate-speech__content"><?=$body ?></div>
             <ul class="debate-speech__meta debate-speech__links">
 
-                <?php if (!$individual_item) { # XXX ?>
-                <li class="link-to-speech"><a href="<?= $speech['listurl'] ?>">Link to this speech</a></li>
-                <?php } ?>
+                <li class="link-to-speech">
+                    <span class="link-to-speech__label">Link to this speech</span>
+                    <a href="<?= $speech['listurl'] ?>" class="link debate-speech__meta__link">In context</a>
+                    <a href="<?= $speech['commentsurl'] ?>" class="link debate-speech__meta__link">Individually</a>
+                </li>
 <?php
                 if ($source_url) {
 ?>
-                <li class="link-to-hansard"><a href="<?=$source_url ?>"><?=$source_text ?></a>
+                <li class="link-to-hansard "><a href="<?=$source_url ?>" class="debate-speech__meta__link"><?=$source_text ?></a>
                 <?php if ($source_title) { ?><span> (<?=$source_title ?>)</span><?php } ?></li>
 <?php
                 }
@@ -239,7 +262,29 @@
 ?>
 
 </div>
+<nav class="debate-navigation debate-navigation--footer" role="navigation">
+        <div class="full-page__row">
+            <div class="debate-navigation__pagination">
+                <?php if (isset($nextprev['prev'])) { ?>
+                <div class="debate-navigation__previous-debate">
+                    <a href="<?= $nextprev['prev']['url'] ?>" rel="prev">&laquo; <?= $nextprev['prev']['body'] ?></a>
+                </div>
+                <?php } ?>
 
+                <?php if (isset($nextprev['up'])) { ?>
+                <div class="debate-navigation__all-debates">
+                    <a href="<?= $nextprev['up']['url'] ?>" rel="up"><?= $nextprev['up']['body'] ?></a>
+                </div>
+                <?php } ?>
+
+                <?php if (isset($nextprev['next'])) { ?>
+                <div class="debate-navigation__next-debate">
+                    <a href="<?= $nextprev['next']['url'] ?>" rel="next"><?= $nextprev['next']['body'] ?> &raquo;</a>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+    </nav>
 <?php
 
 /*
