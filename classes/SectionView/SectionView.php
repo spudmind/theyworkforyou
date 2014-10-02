@@ -111,34 +111,18 @@ class SectionView {
 
         $data['individual_item'] = ($this->list->commentspage == $this_page);
 
-/*
-        if ($this->list->commentspage == $this_page) {
-            $PAGE->stripe_start('side', 'comments');
+        if ($data['individual_item']) {
             $COMMENTLIST = new \COMMENTLIST;
             $args['user_id'] = get_http_var('u');
             $args['epobject_id'] = $this->list->epobject_id();
-            $COMMENTLIST->display('ep', $args);
-            $PAGE->stripe_end();
-            $PAGE->stripe_start('side', 'addcomment');
-            $commentdata = array(
+            $data['comments']['object'] = $COMMENTLIST;
+            $data['comments']['args'] = $args;
+            $data['comments']['commentdata'] = array(
                 'epobject_id' => $this->list->epobject_id(),
                 'gid' => get_http_var('id'), # wrans is LIST->gid?
                 'return_page' => $this_page
             );
-            $PAGE->comment_form($commentdata);
-            if ($THEUSER->isloggedin()) {
-                $sidebar = array(
-                    array(
-                        'type' => 'include',
-                        'content' => 'comment'
-                    )
-                );
-                $PAGE->stripe_end($sidebar);
-            } else {
-                $PAGE->stripe_end();
-            }
         }
-*/
 
         if (!isset($data['info'])) {
             header("HTTP/1.0 404 Not Found");

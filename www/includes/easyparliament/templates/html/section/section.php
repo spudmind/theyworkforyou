@@ -222,7 +222,18 @@
 
     <?php $previous_speech_time = $speech['htime']; ?>
 
-  <?php } // end foreach ?>
+  <?php } // end foreach
+
+    if ($individual_item) {
+        # XXX
+        global $PAGE;
+        $comments['object']->display('ep', $comments['args']);
+        $PAGE->comment_form($comments['commentdata']);
+        # XXX COMMENT SIDEBAR SHOULD GO HERE IF LOGGED IN
+    }
+
+?>
+
 </div>
 
 <?php
