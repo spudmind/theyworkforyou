@@ -158,11 +158,19 @@
                     </div>
                 </div>
               <?php } ?>
+
+              <?php # XXX
+                if ($data['info']['major'] == 8 && preg_match('#\d{4}-\d\d-\d\d\.(.*?)\.q#', $speech['gid'], $m)) {
+                    print " | Question $m[1]";
+                } ?>
+
           <?php } ?>
             <div class="debate-speech__content"><?=$body ?></div>
             <ul class="debate-speech__meta debate-speech__links">
 
+                <?php if (!$individual_item) { # XXX ?>
                 <li class="link-to-speech"><a href="<?= $speech['listurl'] ?>">Link to this speech</a></li>
+                <?php } ?>
 <?php
                 if ($source_url) {
 ?>
@@ -172,6 +180,43 @@
                 }
 ?>
             </ul>
+            <?php if ($speech['voting_data']) { ?>
+
+            <div class="block question">
+            <h4>Does this answer the above question?</h4>
+            <div class="blockbody"><span class="wransvote"><a rel="nofollow" href="<?= $speech['voting_data']['yesvoteurl'] ?>" title="Rate this as answering the question">Yes!</a> <?= $speech['voting_data']['yesvotes'] ?> <?= $speech['voting_data']['yesplural'] ?> so!<br>
+            <a rel="nofollow" href="<?= $speech['voting_data']['novoteurl'] ?>" title="Rate this as NOT answering the question">No!</a> <?= $speech['voting_data']['novotes'] ?> <?= $speech['voting_data']['noplural'] ?> not!</span>
+
+            <p>Would you like to <strong>ask a question like this yourself</strong>? Use our <a href="http://www.whatdotheyknow.com">Freedom of Information site</a>.</p></div>
+
+            </div>
+
+            <?php
+            } # End of voting HTML
+
+            # XXX
+            if ($hansardmajors[$speech['major']]['type'] == 'debate' && $individual_item) {
+                if ($speech['htype'] == '12') {
+                    $thing = 'speech';
+                } elseif ($speech['htype'] == '13') {
+                    $thing = 'item';
+                } else {
+                    $thing = 'item';
+                }
+            ?>
+            <p><small><strong><a href="<?= $speech['listurl'] ?>" class="permalink">See this <?= $thing ?> in context</a></strong></small></p>
+            <?php
+            } # End in context link
+
+            if (isset($speech['commentteaser'])) {
+                echo $speech['commentteaser'];
+            }
+            if (isset($speech['mentions'])) {
+                echo $speech['mentions'];
+            }
+
+            ?>
+
         </div>
     </div>
 

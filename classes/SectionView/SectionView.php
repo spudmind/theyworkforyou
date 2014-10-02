@@ -73,6 +73,8 @@ class SectionView {
     }
 
     protected function display_section_or_speech($args = array()) {
+        global $DATA, $this_page, $THEUSER;
+
         # += as we *don't* want to override any already supplied argument
         $args += array (
             'gid' => get_http_var('id'),
@@ -106,6 +108,8 @@ class SectionView {
             }
             redirect($URL->generate('none'));
         }
+
+        $data['individual_item'] = ($this->list->commentspage == $this_page);
 
 /*
         if ($this->list->commentspage == $this_page) {
@@ -178,18 +182,44 @@ class SectionView {
         $data['section_title'] = '';
         $subsection_title = '';
         for ($i=0; $i<count($data['rows']); $i++) {
-            $htype = $data['rows'][$i]['htype'];
+            $row = $data['rows'][$i];
+            $htype = $row['htype'];
             if ($htype == 10) {
-                $data['section_title'] = $data['rows'][$i]['body'];
+                $data['section_title'] = $row['body'];
             } elseif ($htype == 11) {
-                $subsection_title = $data['rows'][$i]['body'];
+                $subsection_title = $row['body'];
             } elseif ($htype == 12) {
+                # Splitting out highlighting results back into individual bits
                 $data['rows'][$i]['body'] = $bodies[$i];
             }
             if ($htype == 12 || $htype == 13) {
                 $speeches++;
                 if (!$first_speech) {
                     $first_speech = $data['rows'][$i];
+                }
+
+                # Voting links
+                $data['rows'][$i]['voting_data'] = '';
+                if (isset($row['votes'])) {
+                    $data['rows'][$i]['voting_data'] = $this->generate_votes( $row['votes'], $row['epobject_id'], $row['gid'] );
+                }
+
+                # Annotation link
+                if ($this->is_debate_section_page()) {
+                    // Build the 'Add an annotation' link.
+                    if (!$THEUSER->isloggedin()) {
+                        $URL = new \URL('userprompt');
+                        $URL->insert(array('ret'=>$row['commentsurl']));
+                        $data['rows'][$i]['annotation_url'] = $URL->generate();
+                    } else {
+                        $data['rows'][$i]['annotation_url'] = $row['commentsurl'];
+                    }
+
+                    $data['rows'][$i]['commentteaser'] = $this->generate_commentteaser($row);
+                }
+
+                if (isset($row['mentions'])) {
+                    $data['rows'][$i]['mentions'] = $this->get_question_mentions_html($row['mentions']);
                 }
             }
         }
@@ -251,6 +281,8 @@ class SectionView {
         $URL->remove(array('id'));
         $data['debate_day_link'] = $URL->generate();
 
+        $data['nextprev'] = $DATA->page_metadata($this_page, 'nextprev');
+
         return $data;
     }
 
@@ -308,4 +340,65 @@ class SectionView {
         $PAGE->stripe_end($blocks);
     }
 
+    public function is_debate_section_page() {
+        global $this_page;
+        return ($this->major_data['type'] == 'debate' && $this->major_data['page_all'] == $this_page);
+    }
+
+    //$totalcomments, $comment, $commenturl
+    function generate_commentteaser ($row) {
+        // Returns HTML for the one fragment of comment and link for the sidebar.
+        // $totalcomments is the number of comments this item has on it.
+        // $comment is an array like:
+        /* $comment = array (
+            'comment_id' => 23,
+            'user_id'    => 34,
+            'body'        => 'Blah blah...',
+            'posted'    => '2004-02-24 23:45:30',
+            'username'    => 'phil'
+            )
+        */
+        // $url is the URL of the item's page, which contains comments.
+
+        if ($row['totalcomments'] == 0) {
+            return;
+        }
+
+        //Add existing annotations
+        $comment = $row['comment'];
+
+        // If the comment is longer than the speech body, we want to trim it
+        // to be the same length so they fit next to each other.
+        // But the comment typeface is smaller, so we scale things slightly too...
+        $targetsize = round(strlen($row['body']) * 0.6);
+
+        if ($targetsize > strlen($comment['body'])) {
+            // This comment will fit in its entirety.
+            $commentbody = $comment['body'];
+
+            if ($row['totalcomments'] > 1) {
+                $morecount = $row['totalcomments'] - 1;
+                $plural = $morecount == 1 ? 'annotation' : 'annotations';
+                $linktext = "Read $morecount more $plural";
+            }
+
+        } else {
+            // This comment needs trimming.
+            $commentbody = trim_characters($comment['body'], 0, $targetsize, 1000);
+            if ($row['totalcomments'] > 1) {
+                $morecount = $row['totalcomments'] - 1;
+                $plural = $morecount == 1 ? 'annotation' : 'annotations';
+                $linktext = "Continue reading (and $morecount more $plural)";
+            } else {
+                $linktext = 'Continue reading';
+            }
+        }
+
+        $html = '<blockquote><p>' . prepare_comment_for_display($commentbody) . '</p><cite>Submitted by ' . _htmlentities($comment['username']) . '</cite></small></blockquote>' ;
+        if (isset($linktext)) {
+            $html .= ' <a class="morecomments" href="' . $row['commentsurl'] . '#c' . $comment['comment_id'] . '" title="See any annotations posted about this">' . $linktext . '</a>';
+        }
+        $html = '<div class="comment-teaser">' . $html . '</div>';
+        return $html;
+    }
 }

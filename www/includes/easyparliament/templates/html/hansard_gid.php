@@ -187,19 +187,19 @@ if (isset ($data['rows'])) {
 #
 #            echo $row['body'];
 
-            context_link($row);
-            $action_links = array( 'Link to this: <a href="' . $row['commentsurl'] . '" class="link">Individually</a> | <a href="' . $row['listurl'] . '">In context</a>' );
-            $sidebarhtml = generate_commentteaser($row, $data['info']['major'], $action_links);
+            #context_link($row);
+            #$action_links = array( 'Link to this: <a href="' . $row['commentsurl'] . '" class="link">Individually</a> | <a href="' . $row['listurl'] . '">In context</a>' );
+#            $sidebarhtml = generate_commentteaser($row, $data['info']['major']); # , $action_links);
 
             $PAGE->stripe_end(array(
                 array (
                     'type' => 'html',
                     'content' => $video_content
                 ),
-                array (
-                    'type' => 'html',
-                    'content' => $sidebarhtml
-                )
+#                array (
+#                    'type' => 'html',
+#                    'content' => $sidebarhtml
+#                )
             ));
 
 
@@ -313,20 +313,20 @@ if (isset ($data['rows'])) {
 #
 #                //print $desc
 #                if ($desc) print "($desc)";
-
-                // show the question number (Scottish Written Answers only)
-                if ($data['info']['major'] == 8 && preg_match('#\d{4}-\d\d-\d\d\.(.*?)\.q#', $row['gid'], $m)) {
-                    # Scottish Wrans only
-                    print " | Question $m[1]";
-                }
-
+#
+#                // show the question number (Scottish Written Answers only)
+#                if ($data['info']['major'] == 8 && preg_match('#\d{4}-\d\d-\d\d\.(.*?)\.q#', $row['gid'], $m)) {
+#                    # Scottish Wrans only
+#                    print " | Question $m[1]";
+#                }
+#
 #                echo "</small>";
 #            }
-
+#
             // link
-            if ($hansardmajors[$data['info']['major']]['type']=='debate' && $this_page == $hansardmajors[$data['info']['major']]['page_all']) {
-                $action_links["link"] = 'Link to this: <a href="' . $row['commentsurl'] . '" class="link">Individually</a> | <a href="' . $row['listurl'] . '">In context</a>';
-            }
+            #if ($hansardmajors[$data['info']['major']]['type']=='debate' && $this_page == $hansardmajors[$data['info']['major']]['page_all']) {
+            #    $action_links["link"] = 'Link to this: <a href="' . $row['commentsurl'] . '" class="link">Individually</a> | <a href="' . $row['listurl'] . '">In context</a>';
+            #}
 
 #            //source
 #            if (isset($row['source_url']) && $row['source_url'] != '') {
@@ -409,46 +409,46 @@ if (isset ($data['rows'])) {
 #
 #            echo str_replace(array('<br/>', '</p><p'), array('</p> <p>', '</p> <p'), $body); # NN4 font size bug
 
-            context_link($row);
-
-            $sidebarhtml = '';
-
-            if (isset($row['votes']) && (!strstr($row['gid'], 'q'))) {
-                $sidebarhtml .= generate_votes ( $row['votes'], $row['major'], $row['epobject_id'], $row['gid'] );
-            }
-
-            if ($hansardmajors[$data['info']['major']]['type']=='debate' && $this_page == $hansardmajors[$data['info']['major']]['page_all']) {
-                // Build the 'Add an annotation' link.
-                if (!$THEUSER->isloggedin()) {
-                    $URL = new URL('userprompt');
-                    $URL->insert(array('ret'=>$row['commentsurl']));
-                    $commentsurl = $URL->generate();
-                } else {
-                    $commentsurl = $row['commentsurl'];
-                }
-
-                $action_links['add'] = '<a class="annotate" href="' . $commentsurl . '#addcomment">Add an annotation</a> <small>(e.g. more info, blog post or wikipedia article)</small>';
-            }
+            #context_link($row);
+#
+#            $sidebarhtml = '';
+#
+#            if (isset($row['votes']) && (!strstr($row['gid'], 'q'))) {
+#                $sidebarhtml .= generate_votes ( $row['votes'], $row['major'], $row['epobject_id'], $row['gid'] );
+#            }
+#
+#            if ($hansardmajors[$data['info']['major']]['type']=='debate' && $this_page == $hansardmajors[$data['info']['major']]['page_all']) {
+#                // Build the 'Add an annotation' link.
+#                if (!$THEUSER->isloggedin()) {
+#                    $URL = new URL('userprompt');
+#                    $URL->insert(array('ret'=>$row['commentsurl']));
+#                    $commentsurl = $URL->generate();
+#                } else {
+#                    $commentsurl = $row['commentsurl'];
+#                }
+#
+#                $action_links['add'] = '<a class="annotate" href="' . $commentsurl . '#addcomment">Add an annotation</a> <small>(e.g. more info, blog post or wikipedia article)</small>';
+#            }
 
 # Do the logic for this in the function; plus why shouldn't
 # you be able to comment on speeches with unknown speakers?
 #            if (($hansardmajors[$data['info']['major']]['type'] == 'debate') && isset($row['speaker']) && count($row['speaker']) > 0) {
-            $sidebarhtml .= generate_commentteaser($row, $data['info']['major'], $action_links);
+#            $sidebarhtml .= generate_commentteaser($row, $data['info']['major']); # , $action_links);
 #            }
-
-            if (isset($row['mentions'])) {
-                $sidebarhtml .= get_question_mentions_html($row['mentions']);
-            }
+#
+#            if (isset($row['mentions'])) {
+#                $sidebarhtml .= get_question_mentions_html($row['mentions']);
+#            }
 
             $PAGE->stripe_end(array(
                 array (
                     'type' => 'html',
                     'content' => $video_content
                 ),
-                array (
-                    'type' => 'html',
-                    'content' => $sidebarhtml
-                ),
+#                array (
+#                    'type' => 'html',
+#                    'content' => $sidebarhtml
+#                ),
             ));
 
 
@@ -523,21 +523,21 @@ if (isset ($data['rows'])) {
 
 
 
-if ($this_page == 'debates' || $this_page == 'whalls' || $this_page == 'lordsdebates' || $this_page == 'nidebates' || $this_page == 'pbc_clause') {
-    // Previous / Index / Next links, if any.
-
-    $PAGE->stripe_start('foot');
-    echo '&nbsp;<br>';
+#if ($this_page == 'debates' || $this_page == 'whalls' || $this_page == 'lordsdebates' || $this_page == 'nidebates' || $this_page == 'pbc_clause') {
+#    // Previous / Index / Next links, if any.
+#
+#    $PAGE->stripe_start('foot');
+#    echo '&nbsp;<br>';
 //    $PAGE->nextprevlinks();
-    ?>&nbsp;<br>&nbsp;<?php
-    $PAGE->stripe_end(array(
-        array (
-            'type' => 'nextprev'
-        )
-    ));
-}
+#    ? >&nbsp;<br>&nbsp;<?php
+#    $PAGE->stripe_end(array(
+#        array (
+#            'type' => 'nextprev'
+#        )
+#    ));
+#}
 
-
+/*
 function context_link (&$row) {
     global $this_page, $hansardmajors;
 
@@ -554,11 +554,12 @@ function context_link (&$row) {
 <?php
     }
 }
+*/
 
 
-
+/*
 //$totalcomments, $comment, $commenturl
-function generate_commentteaser (&$row, $major, $action_links) {
+function generate_commentteaser (&$row, $major) { #, $action_links) {
     // Returns HTML for the one fragment of comment and link for the sidebar.
     // $totalcomments is the number of comments this item has on it.
     // $comment is an array like:
@@ -569,7 +570,7 @@ function generate_commentteaser (&$row, $major, $action_links) {
         'posted'    => '2004-02-24 23:45:30',
         'username'    => 'phil'
         )
-    */
+    * /
     // $url is the URL of the item's page, which contains comments.
 
     global $this_page, $hansardmajors;
@@ -577,13 +578,13 @@ function generate_commentteaser (&$row, $major, $action_links) {
     $html = '';
 
         //Action links
-    if (isset($action_links)) {
-        $html .= '<ul>';
-            foreach ($action_links as $action_link) {
-                $html .= "<li>$action_link</li>\n";
-            }
-        $html .= '</ul>';
-    }
+#    if (isset($action_links)) {
+#        $html .= '<ul>';
+#            foreach ($action_links as $action_link) {
+#                $html .= "<li>$action_link</li>\n";
+#            }
+#        $html .= '</ul>';
+#    }
 
     if ($hansardmajors[$major]['type'] == 'debate' && $hansardmajors[$major]['page_all']==$this_page) {
 
@@ -632,80 +633,82 @@ function generate_commentteaser (&$row, $major, $action_links) {
 
     return $html;
 }
+*/
 
-$votelinks_so_far = 0;
-function generate_votes ($votes, $major, $id, $gid) {
-    /*
-    Returns HTML for the 'Interesting?' links (debates) or the 'Does this answer
-    the question?' links (wrans) in the sidebar.
+#$votelinks_so_far = 0;
+#function generate_votes ($votes, $major, $id, $gid) {
+#    /*
+#    Returns HTML for the 'Interesting?' links (debates) or the 'Does this answer
+#    the question?' links (wrans) in the sidebar.
+#
+#    We have yes/no, even for debates, for which we only allow people to say 'yes'.
+#
+#    $votes = => array (
+#        'user'    => array (
+#            'yes'    => '21',
+#            'no'    => '3'
+#        ),
+#        'anon'    => array (
+#            'yes'    => '132',
+#            'no'    => '30'
+#        )
+#    )
+#
+#    $major is the htype of this item (eg, 12 or 13 for debates, 61 or 62 for wrans).
+#    $id is an epobject_id.
+#    */
+#
+#    global $this_page, $votelinks_so_far;
+#
+#    // What we return.
+#    $html = '';
+#
+#    $URL = new URL($this_page);
+#    $returl = $URL->generate();
+#
+#    $VOTEURL = new URL('epvote');
+#    $VOTEURL->insert(array('v'=>'1', 'id'=>$id, 'ret'=>$returl));
+#
+#    if (($major == 3 || $major == 8) && ($votelinks_so_far > 0 || preg_match('#r#', $gid) ) ) { # XXX
+#        // Wrans.
+#        $yesvotes = $votes['user']['yes'] + $votes['anon']['yes'];
+#        $novotes = $votes['user']['no'] + $votes['anon']['no'];
+#
+#        $yesplural = $yesvotes == 1 ? 'person thinks' : 'people think';
+#        $noplural = $novotes == 1 ? 'person thinks' : 'people think';
+#
+#        $html .= '<h4>Does this answer the above question?</h4>';
+#
+#        $html .= '<div class="blockbody"><span class="wransvote"><a rel="nofollow" href="' . $VOTEURL->generate() . '" title="Rate this as answering the question">Yes!</a> ' . $yesvotes . ' ' . $yesplural . ' so!<br>';
+#
+#        $VOTEURL->insert(array('v'=>'0'));
+#
+#        $html .= '<a rel="nofollow" href="' . $VOTEURL->generate() . '" title="Rate this as NOT answering the question">No!</a> ' . $novotes . ' ' . $noplural . ' not!</span>';
+#
+#        $html .= "<p>Would you like to <strong>ask a question like this yourself</strong>? Use our <a href=\"http://www.whatdotheyknow.com\">Freedom of Information site</a>.</p></div>";
+#
+#    } elseif ($major == 1) {
+#        // Debates.
+#
+#        /*
+#        We aren't putting Interesting? buttons in for now...
+#
+#        $VOTEURL->insert(array('v'=>'1'));
+#        $totalvotes = $votes['user']['yes'] + $votes['anon']['yes'];
+#        $plural = $totalvotes == 1 ? 'person thinks' : 'people think';
+#
+#        $html .= '<a href="' . $VOTEURL->generate() . '" title="Rate this as being interesting">Interesting?</a> ' . $totalvotes . ' ' . $plural . ' so!';
+#        */
+#
+#    }
+#
+#    $votelinks_so_far++;
+#    $html = "\t\t\t\t<div class=\"block question\">$html</div>\n";
+#    return $html;
+#
+#}
 
-    We have yes/no, even for debates, for which we only allow people to say 'yes'.
-
-    $votes = => array (
-        'user'    => array (
-            'yes'    => '21',
-            'no'    => '3'
-        ),
-        'anon'    => array (
-            'yes'    => '132',
-            'no'    => '30'
-        )
-    )
-
-    $major is the htype of this item (eg, 12 or 13 for debates, 61 or 62 for wrans).
-    $id is an epobject_id.
-    */
-
-    global $this_page, $votelinks_so_far;
-
-    // What we return.
-    $html = '';
-
-    $URL = new URL($this_page);
-    $returl = $URL->generate();
-
-    $VOTEURL = new URL('epvote');
-    $VOTEURL->insert(array('v'=>'1', 'id'=>$id, 'ret'=>$returl));
-
-    if (($major == 3 || $major == 8) && ($votelinks_so_far > 0 || preg_match('#r#', $gid) ) ) { # XXX
-        // Wrans.
-        $yesvotes = $votes['user']['yes'] + $votes['anon']['yes'];
-        $novotes = $votes['user']['no'] + $votes['anon']['no'];
-
-        $yesplural = $yesvotes == 1 ? 'person thinks' : 'people think';
-        $noplural = $novotes == 1 ? 'person thinks' : 'people think';
-
-        $html .= '<h4>Does this answer the above question?</h4>';
-
-        $html .= '<div class="blockbody"><span class="wransvote"><a rel="nofollow" href="' . $VOTEURL->generate() . '" title="Rate this as answering the question">Yes!</a> ' . $yesvotes . ' ' . $yesplural . ' so!<br>';
-
-        $VOTEURL->insert(array('v'=>'0'));
-
-        $html .= '<a rel="nofollow" href="' . $VOTEURL->generate() . '" title="Rate this as NOT answering the question">No!</a> ' . $novotes . ' ' . $noplural . ' not!</span>';
-
-        $html .= "<p>Would you like to <strong>ask a question like this yourself</strong>? Use our <a href=\"http://www.whatdotheyknow.com\">Freedom of Information site</a>.</p></div>";
-
-    } elseif ($major == 1) {
-        // Debates.
-
-        /*
-        We aren't putting Interesting? buttons in for now...
-
-        $VOTEURL->insert(array('v'=>'1'));
-        $totalvotes = $votes['user']['yes'] + $votes['anon']['yes'];
-        $plural = $totalvotes == 1 ? 'person thinks' : 'people think';
-
-        $html .= '<a href="' . $VOTEURL->generate() . '" title="Rate this as being interesting">Interesting?</a> ' . $totalvotes . ' ' . $plural . ' so!';
-        */
-
-    }
-
-    $votelinks_so_far++;
-    $html = "\t\t\t\t<div class=\"block question\">$html</div>\n";
-    return $html;
-
-}
-
+/*
 function get_question_mentions_html($row_data) {
     if( count($row_data) == 0 ) {
         return '';
@@ -791,6 +794,7 @@ function get_question_mentions_html($row_data) {
     $result .= '</ul>';
     return $result;
 }
+*/
 
 function video_sidebar($row, $section, $count, $major) {
     include_once INCLUDESPATH . 'easyparliament/video.php';
