@@ -170,8 +170,10 @@ class SectionView {
             $htype = $row['htype'];
             if ($htype == 10) {
                 $data['section_title'] = $row['body'];
+                $heading_hpos = $row['hpos'];
             } elseif ($htype == 11) {
                 $subsection_title = $row['body'];
+                $heading_hpos = $row['hpos'];
             } elseif ($htype == 12) {
                 # Splitting out highlighting results back into individual bits
                 $data['rows'][$i]['body'] = $bodies[$i];
@@ -204,6 +206,10 @@ class SectionView {
 
                 if (isset($row['mentions'])) {
                     $data['rows'][$i]['mentions'] = $this->get_question_mentions_html($row['mentions']);
+                }
+
+                if ($this->major == 1) {
+                    $data['rows'][$i]['video'] = $this->get_video_html($row, $heading_hpos, $speeches);
                 }
             }
         }

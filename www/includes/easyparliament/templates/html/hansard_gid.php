@@ -8,9 +8,9 @@
 
 // The array $data will be packed full of luverly stuff about hansard objects.
 // See the bottom of this document for information about its structure and contents...
-
-global $PAGE, $this_page, $GLOSSARY, $hansardmajors, $DATA, $THEUSER;
-
+#
+#global $PAGE, $this_page, $GLOSSARY, $hansardmajors, $DATA, $THEUSER;
+#
 #include_once INCLUDESPATH."easyparliament/searchengine.php";
 #include_once INCLUDESPATH."easyparliament/member.php";
 #
@@ -42,8 +42,8 @@ global $PAGE, $this_page, $GLOSSARY, $hansardmajors, $DATA, $THEUSER;
 #    )
 #));
 #*/
-
-if (isset ($data['rows'])) {
+#
+#if (isset ($data['rows'])) {
 #    // For highlighting
 #    $SEARCHENGINE = null;
 #    if (isset($data['info']['searchstring']) && $data['info']['searchstring'] != '') {
@@ -88,10 +88,10 @@ if (isset ($data['rows'])) {
 #    $timetracker = 0;
 #
 #    $stripecount = 0; // Used to generate stripes.
-
-    $first_speech_displayed = 0; // We want to know when to insert the video
-    $first_video_displayed = 0; // or the advert to do the video
-
+#
+#    $first_speech_displayed = 0; // We want to know when to insert the video
+#    $first_video_displayed = 0; // or the advert to do the video
+#
 #    // We're going to be just cycling through each row of data for this page.
 #    // When we get the first section, we put its text in $section_title.
 #    // When we get the first subsection, we put its text in $subsection_title.
@@ -102,12 +102,12 @@ if (isset ($data['rows'])) {
 
 #    // So we don't keep on printing the titles!
 #    $titles_displayed = false;
-    foreach ($data['rows'] as $row) {
-        if (count($row) == 0) {
-            // Oops, there's nothing in this row. A check just in case.
-            continue;
-        }
-
+#    foreach ($data['rows'] as $row) {
+#        if (count($row) == 0) {
+#            // Oops, there's nothing in this row. A check just in case.
+#            continue;
+#        }
+#
 #        // DISPLAY SECTION AND SUBSECTION HEADINGS.
 #        if (!$titles_displayed && $row['htype'] != '10' && $row['htype'] != '11') {
 #            // Output the titles we've got so far.
@@ -162,66 +162,66 @@ if (isset ($data['rows'])) {
 #        } elseif ($row['htype'] == '11') {
 #            $subsection_title = $row['body'];
 #            $section['hpos'] = $row['hpos'];
-        } elseif ($row['htype'] == '13') {
+#        } elseif ($row['htype'] == '13') {
 #            // DEBATE PROCEDURAL.
 #
 #            $stripecount++;
 #            $style = $stripecount % 2 == 0 ? '1' : '2';
-
-            if (!isset($section['first_gid'])) $section['first_gid'] = $row['gid'];
-
-            $video_content = '';
-            if ($first_video_displayed == 0 && $row['video_status']&4 && !($row['video_status']&8)) {
-                $video_content = video_sidebar($row, $section, $speeches, $data['info']['major']);
-                $first_video_displayed = true;
-            }
-            if ($video_content == '' && $first_speech_displayed == 0 && $row['video_status']&1 && !($row['video_status']&12)) {
-                $video_content = video_advert($row, $data['info']['major']);
-                $first_speech_displayed = true;
-            }
-
+#
+#            if (!isset($section['first_gid'])) $section['first_gid'] = $row['gid'];
+#
+#            $video_content = '';
+#            if ($first_video_displayed == 0 && $row['video_status']&4 && !($row['video_status']&8)) {
+#                $video_content = video_sidebar($row, $section, $speeches, $data['info']['major']);
+#                $first_video_displayed = true;
+#            }
+#            if ($video_content == '' && $first_speech_displayed == 0 && $row['video_status']&1 && !($row['video_status']&12)) {
+#                $video_content = video_advert($row, $data['info']['major']);
+#                $first_speech_displayed = true;
+#            }
+#
 #            $id = '';
 #            if ($this_page != 'debate') $id = 'g' . gid_to_anchor($row['gid']);
 #            $PAGE->stripe_start('procedural-'.$style, $id);
 #            if ($id) echo '<a name="', $id, '"></a>';
 #
 #            echo $row['body'];
-
-            #context_link($row);
-            #$action_links = array( 'Link to this: <a href="' . $row['commentsurl'] . '" class="link">Individually</a> | <a href="' . $row['listurl'] . '">In context</a>' );
+#
+#            #context_link($row);
+#            #$action_links = array( 'Link to this: <a href="' . $row['commentsurl'] . '" class="link">Individually</a> | <a href="' . $row['listurl'] . '">In context</a>' );
 #            $sidebarhtml = generate_commentteaser($row, $data['info']['major']); # , $action_links);
-
-            $PAGE->stripe_end(array(
-                array (
-                    'type' => 'html',
-                    'content' => $video_content
-                ),
+#
+#            $PAGE->stripe_end(array(
+#                array (
+#                    'type' => 'html',
+#                    'content' => $video_content
+#                ),
 #                array (
 #                    'type' => 'html',
 #                    'content' => $sidebarhtml
 #                )
-            ));
-
-
-
-        } elseif ( $row['htype'] == '12') {
+#            ));
+#
+#
+#
+#        } elseif ( $row['htype'] == '12') {
 #            // A STANDARD SPEECH OR WRANS TEXT.
 #
 #            $stripecount++;
 #            $style = $stripecount % 2 == 0 ? '1' : '2';
-
-            if (!isset($section['first_gid'])) $section['first_gid'] = $row['gid'];
-
-            $video_content = '';
-            if ($first_video_displayed == 0 && $row['video_status']&4 && !($row['video_status']&8)) {
-                $video_content = video_sidebar($row, $section, $speeches, $data['info']['major']);
-                $first_video_displayed = true;
-            }
-            if ($video_content == '' && $first_speech_displayed == 0 && $row['video_status']&1 && !($row['video_status']&12)) {
-                $video_content = video_advert($row, $data['info']['major']);
-                $first_speech_displayed = true;
-            }
-
+#
+#            if (!isset($section['first_gid'])) $section['first_gid'] = $row['gid'];
+#
+#            $video_content = '';
+#            if ($first_video_displayed == 0 && $row['video_status']&4 && !($row['video_status']&8)) {
+#                $video_content = video_sidebar($row, $section, $speeches, $data['info']['major']);
+#                $first_video_displayed = true;
+#            }
+#            if ($video_content == '' && $first_speech_displayed == 0 && $row['video_status']&1 && !($row['video_status']&12)) {
+#                $video_content = video_advert($row, $data['info']['major']);
+#                $first_speech_displayed = true;
+#            }
+#
 #            // If this item is at a new time, then print the time.
 #            if (substr($row['htime'],0,5) != $timetracker && $row['htime'] != "00:00:00" && $stripecount != 1) {
 #                $style = $stripecount++;
@@ -366,17 +366,17 @@ if (isset ($data['rows'])) {
 #                    $action_links['source'] .= " ($source_title)";
 #                }
 #            }
-
-            //video
-            if ($data['info']['major'] == 1 && $this_page != 'debate') { # Commons debates only
-                if ($row['video_status']&4) {
-                    $action_links["video"] = '<a href="' . $row['commentsurl'] . '" class="watch" onclick="return moveVideo(\'debate/' . $row['gid'] . '\');">Watch this</a>';
-                } elseif (!$video_content && $row['video_status']&1 && !($row['video_status']&8)) {
-                    $gid_type = $data['info']['major'] == 1 ? 'debate' : 'lords';
-                    $action_links["video"] = '<a href="/video/?from=debate&amp;gid=' . $gid_type . '/' . $row['gid'] . '" class="timestamp">Video match this</a>';
-                }
-            }
-
+#
+#            //video
+#            if ($data['info']['major'] == 1 && $this_page != 'debate') { # Commons debates only
+#                if ($row['video_status']&4) {
+#                    $action_links["video"] = '<a href="' . $row['commentsurl'] . '" class="watch" onclick="return moveVideo(\'debate/' . $row['gid'] . '\');">Watch this</a>';
+#                } elseif (!$video_content && $row['video_status']&1 && !($row['video_status']&8)) {
+#                    $gid_type = $data['info']['major'] == 1 ? 'debate' : 'lords';
+#                    $action_links["video"] = '<a href="/video/?from=debate&amp;gid=' . $gid_type . '/' . $row['gid'] . '" class="timestamp">Video match this</a>';
+#                }
+#            }
+#
 #            $body = $row['body'];
 #
 #            if ($hansardmajors[$data['info']['major']]['location'] == 'Scotland') {
@@ -439,26 +439,26 @@ if (isset ($data['rows'])) {
 #            if (isset($row['mentions'])) {
 #                $sidebarhtml .= get_question_mentions_html($row['mentions']);
 #            }
-
-            $PAGE->stripe_end(array(
-                array (
-                    'type' => 'html',
-                    'content' => $video_content
-                ),
+#
+#            $PAGE->stripe_end(array(
+#                array (
+#                    'type' => 'html',
+#                    'content' => $video_content
+#                ),
 #                array (
 #                    'type' => 'html',
 #                    'content' => $sidebarhtml
 #                ),
-            ));
-
-
-        } // End htype 12.
-
-
-        ob_flush(); //flush the output buffer
-
-    } // End cycling through rows.
-
+#            ));
+#
+#
+#        } // End htype 12.
+#
+#
+#        ob_flush(); //flush the output buffer
+#
+#    } // End cycling through rows.
+#
 #    if (!$titles_displayed) {
 #        $PAGE->stripe_start('head-2');
 #        if($subsection_title != '' && $subsection_title != "&nbsp;") {
@@ -795,7 +795,7 @@ function get_question_mentions_html($row_data) {
     return $result;
 }
 */
-
+/*
 function video_sidebar($row, $section, $count, $major) {
     include_once INCLUDESPATH . 'easyparliament/video.php';
     $db = new ParlDB;
@@ -847,3 +847,4 @@ to get the right video playing here
 </div>
 ';
 }
+*/

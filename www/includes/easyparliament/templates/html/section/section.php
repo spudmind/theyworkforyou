@@ -217,6 +217,22 @@
             <?php
             } # End of voting HTML
 
+            // Video
+            if ($data['info']['major'] == 1 && !$individual_item) { # Commons debates only
+                if ($speech['video_status']&4) { ?>
+                    <a href="<?= $speech['commentsurl'] ?>" class="watch" onclick="return moveVideo(\'debate/'<?= $speech['gid'] ?>\');">Watch this</a>
+                <?php
+                } elseif (!$speech['video'] && $speech['video_status']&1 && !($speech['video_status']&8)) {
+                    $gid_type = $data['info']['major'] == 1 ? 'debate' : 'lords'; ?>
+                    <a href="/video/?from=debate&amp;gid=<?= $gid_type ?>/<?= $speech['gid'] ?>" class="timestamp">Video match this</a>
+                <?php
+                }
+            }
+
+            if (isset($speech['video'])) {
+                echo $speech['video'];
+            }
+
             # XXX
             if ($hansardmajors[$speech['major']]['type'] == 'debate' && $individual_item) {
                 if ($speech['htype'] == '12') {
