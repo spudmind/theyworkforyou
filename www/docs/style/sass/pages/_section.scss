@@ -355,19 +355,45 @@ span.hi {
 }
 
 .comment-teaser {
+  padding-top: 0.5em;
+  max-width: 45em;
   blockquote {
     border: 0;
     padding: 0;
+    margin: 0;
   }
   p {
+    font-size: 0.888888889em;
     &:last-of-type {
-      margin-bottom: 0;
+      margin-bottom: 0.25em;
     }
   }
   cite {
     font-style: normal;
+    display: inline;
   }
   @media (min-width: $medium-screen) {
-    padding-left: 70px;
+    margin-left: 70px;
+    padding-left: 26px;
+    background-image: url('../img/elbow.png');
+    background-position: 0 3px;
+    background-repeat: no-repeat;
+    background-size: 24px;
+    @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+      background-image: url('../img/elbow@2.png');
+    }
+  }
+
+  .morecomments {
+    font-size: 0.72222em;
+    color: #9d9195;
+    &:hover,
+    &:active,
+    &:focus {
+      color: $primary-color;
+    }
+    &:after {
+      content: "  \00BB"; //»
+    }
   }
 }

@@ -249,8 +249,11 @@
 
             if (isset($speech['commentteaser'])) { ?>
             <div class="comment-teaser">
-                <blockquote><p><?= $speech['commentteaser']['body'] ?></p><cite>Submitted by <?= $speech['commentteaser']['username'] ?></cite></small></blockquote>
+                <blockquote><p><?= $speech['commentteaser']['body'] ?></p><cite>Submitted by <?= $speech['commentteaser']['username'] ?></cite>
+
                 <a class="morecomments" href="<?= $speech['commentteaser']['commentsurl'] ?>#c<?= $speech['commentteaser']['comment_id'] ?>" title="See any annotations posted about this"><?= $speech['commentteaser']['linktext'] ?></a>
+                </blockquote>
+
              </div>
             <?php
             }
