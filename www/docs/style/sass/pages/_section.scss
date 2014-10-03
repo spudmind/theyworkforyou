@@ -162,6 +162,9 @@ span.hi {
   p {
     line-height: 1.4em;
     margin-bottom: 0.8em;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   @media (min-width: $medium-screen) {
@@ -330,6 +333,7 @@ span.hi {
 
 .debate-navigation--footer {
   border-bottom: 1px solid $borders;
+  border-top: 1px solid $borders;
 }
 
 .debate-navigation__pagination {
@@ -348,4 +352,22 @@ span.hi {
         display: inline-block;
       }
     }
+}
+
+.comment-teaser {
+  blockquote {
+    border: 0;
+    padding: 0;
+  }
+  p {
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+  cite {
+    font-style: normal;
+  }
+  @media (min-width: $medium-screen) {
+    padding-left: 70px;
+  }
 }
