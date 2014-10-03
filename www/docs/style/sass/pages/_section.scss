@@ -288,6 +288,13 @@ span.hi {
 
 }
 
+.speech-link-in-context {
+  /* Only appears on individual speech pages */
+  @media (min-width: $medium-screen) {
+    padding-left: 70px;
+  }
+}
+
 .debate-footer__content {
   position: relative;
 }

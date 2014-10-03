@@ -227,7 +227,7 @@
                     $thing = 'item';
                 }
             ?>
-            <p><small><strong><a href="<?= $speech['listurl'] ?>" class="permalink">See this <?= $thing ?> in context</a></strong></small></p>
+            <p class="speech-link-in-context"><a href="<?= $speech['listurl'] ?>" class="permalink link debate-speech__meta__link">See this <?= $thing ?> in context</a></p>
             <?php
             } # End in context link
 
