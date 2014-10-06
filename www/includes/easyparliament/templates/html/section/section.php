@@ -187,22 +187,7 @@
 
           <?php } ?>
             <div class="debate-speech__content"><?=$body ?></div>
-            <ul class="debate-speech__meta debate-speech__links">
 
-                <li class="link-to-speech">
-                    <span class="link-to-speech__label">Link to this speech</span>
-                    <a href="<?= $speech['listurl'] ?>" class="link debate-speech__meta__link">In context</a>
-                    <a href="<?= $speech['commentsurl'] ?>" class="link debate-speech__meta__link">Individually</a>
-                </li>
-<?php
-                if ($source_url) {
-?>
-                <li class="link-to-hansard "><a href="<?=$source_url ?>" class="debate-speech__meta__link"><?=$source_text ?></a>
-                <?php if ($source_title) { ?><span> (<?=$source_title ?>)</span><?php } ?></li>
-<?php
-                }
-?>
-            </ul>
             <?php if ($speech['voting_data']) { ?>
 
             <div class="block question">
@@ -265,7 +250,25 @@
             }
 
             ?>
+            <ul class="debate-speech__meta debate-speech__links">
+                <?php if (!$individual_item) { # XXX ?>
+                <li class="link-to-speech">
+                    <span class="link-to-speech__label">Link to this speech</span>
 
+                    <a href="<?= $speech['listurl'] ?>" class="link debate-speech__meta__link">In context</a>
+
+                    <a href="<?= $speech['commentsurl'] ?>" class="link debate-speech__meta__link">Individually</a>
+                </li>
+                <?php } ?>
+<?php
+                if ($source_url) {
+?>
+                <li class="link-to-hansard "><a href="<?=$source_url ?>" class="debate-speech__meta__link"><?=$source_text ?></a>
+                <?php if ($source_title) { ?><span> (<?=$source_title ?>)</span><?php } ?></li>
+<?php
+                }
+?>
+            </ul>
         </div>
     </div>
 
