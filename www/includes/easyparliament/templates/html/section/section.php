@@ -249,6 +249,9 @@
 
             if (isset($speech['commentteaser'])) { ?>
             <div class="comment-teaser">
+                <div class="comment-teaser__avatar">
+                    <span class="initial"><?= substr($speech['commentteaser']['username'], 0, 1); ?></span>
+                </div>
                 <blockquote><p><?= $speech['commentteaser']['body'] ?></p><cite>Submitted by <?= $speech['commentteaser']['username'] ?></cite>
 
                 <a class="morecomments" href="<?= $speech['commentteaser']['commentsurl'] ?>#c<?= $speech['commentteaser']['comment_id'] ?>" title="See any annotations posted about this"><?= $speech['commentteaser']['linktext'] ?></a>

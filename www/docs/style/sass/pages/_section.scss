@@ -360,7 +360,7 @@ span.hi {
   blockquote {
     border: 0;
     padding: 0;
-    margin: 0;
+    margin: 0 0 0 30px;
   }
   p {
     font-size: 0.888888889em;
@@ -395,5 +395,22 @@ span.hi {
     &:after {
       content: "  \00BB"; //»
     }
+  }
+}
+
+.comment-teaser__avatar {
+  background-color: #a94ca6;
+  display: inline-block;
+  @include radius(emCalc(24));
+  color: #fff;
+  text-align: center;
+  width: emCalc(24);
+  height: emCalc(24);
+  float: left;
+  .initial {
+      font-size: emCalc(14);
+      vertical-align: middle;
+      line-height: 1em;
+      font-weight: 600;
   }
 }
