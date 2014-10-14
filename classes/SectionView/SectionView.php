@@ -221,28 +221,28 @@ class SectionView {
         }
 
         if ($subsection_title) {
-            $data['intro'] = "This $data[section_title]";
+            $data['intro'] = "$data[section_title]";
         } else {
-            $data['intro'] = "This";
+            $data['intro'] = "";
         }
         if ($this->major == 1) {
-            $data['location'] = 'debate took place in the House of Commons';
+            $data['location'] = '&ndash; in the House of Commons';
         } elseif ($this->major == 2) {
-            $data['location'] = 'debate took place in Westminster Hall';
+            $data['location'] = '&ndash; in Westminster Hall';
         } elseif ($this->major == 3) {
-            $data['location'] = 'written question was answered';
+            $data['location'] = 'written question &ndash; answered';
         } elseif ($this->major == 4) {
-            $data['location'] = 'written statement was made';
+            $data['location'] = 'written statement &ndash; made';
         } elseif ($this->major == 5) {
-            $data['location'] = 'debate took place in the Northern Ireland Assembly';
+            $data['location'] = '&ndash; in the Northern Ireland Assembly';
         } elseif ($this->major == 6) {
-            $data['location'] = 'debate took place in a Public Bill Committee';
+            $data['location'] = '&ndash; in a Public Bill Committee';
         } elseif ($this->major == 7) {
-            $data['location'] = 'debate took place in the Scottish Parliament';
+            $data['location'] = '&ndash; in the Scottish Parliament';
         } elseif ($this->major == 8) {
-            $data['location'] = 'Scottish Parliament written question was answered';
+            $data['location'] = '&ndash; Scottish Parliament written question &ndash; answered';
         } elseif ($this->major == 101) {
-            $data['location'] = 'debate took place in the House of Lords';
+            $data['location'] = '&ndash; in the House of Lords';
         }
 
         if (array_key_exists('text_heading', $data['info'])) {
@@ -250,9 +250,9 @@ class SectionView {
         } else {
             // The user has requested only part of a debate, so find a suitable title
             if ($subsection_title) {
-                $data['intro'] = "This is part of the $data[section_title] debate that took place";
+                $data['intro'] = "Part of $data[section_title]";
             } else {
-                $data['intro'] = "This is part of the debate that took place";
+                $data['intro'] = "Part of the debate";
             }
             foreach ($data['rows'] as $row) {
                 if ($row['htype'] == 10 || $row['htype'] == 11) {
