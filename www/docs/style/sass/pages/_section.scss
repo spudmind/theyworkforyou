@@ -298,10 +298,10 @@ span.hi {
   }
 }
 
+.subrows,
 .debate-comments {
   background-color: #fff;
   padding: 20px 0;
-  border-top: 1px solid lighten($borders, 7%);
   @media (min-width: $large-screen) {
     padding-top: 40px;
     padding-bottom: 40px;
@@ -309,9 +309,13 @@ span.hi {
 
   .full-page__row {
     width: auto;
-    padding: 0 20px;
+    padding: 0 1em;
     position: relative;
   }
+}
+
+.debate-comments {
+    border-top: 1px solid lighten($borders, 7%);
 }
 
 .debate-footer__content {
@@ -429,4 +433,27 @@ span.hi {
       line-height: 1em;
       font-weight: 600;
   }
+}
+
+
+.subrows {
+  ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.subrows__list-item {
+  color: #9d9195; //Set this to a light, so we can easily see rows without links.
+  small {
+    font-size: 0.833333333em;
+    color: #9d9195;
+  }
+}
+
+.subrows__excerpt {
+  max-width: 45em;
+  line-height: 1.5em;
+  color: $body-font-color;
 }
