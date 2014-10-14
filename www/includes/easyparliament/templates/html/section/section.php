@@ -276,51 +276,19 @@
 
   <?php } // end foreach
 
-    if (isset($data['subrows'])) {
-        print '<ul>';
-        foreach ($data['subrows'] as $row) {
-            print '<li>';
-            if (isset($row['contentcount']) && $row['contentcount'] > 0) {
-                $has_content = true;
-            } elseif ($row['htype'] == '11' && $hansardmajors[$row['major']]['type'] == 'other') {
-                $has_content = true;
-            } else {
-                $has_content = false;
-            }
-            if ($has_content) {
-                print '<a href="' . $row['listurl'] . '"><strong>' . $row['body'] . '</strong></a> ';
-                // For the "x speeches, x comments" text.
-                $moreinfo = array();
-                if ($hansardmajors[$row['major']]['type'] != 'other') {
-                    // All wrans have 2 speeches, so no need for this.
-                    // All WMS have 1 speech
-                    $plural = $row['contentcount'] == 1 ? 'speech' : 'speeches';
-                    $moreinfo[] = $row['contentcount'] . " $plural";
-                }
-                if ($row['totalcomments'] > 0) {
-                    $plural = $row['totalcomments'] == 1 ? 'annotation' : 'annotations';
-                    $moreinfo[] = $row['totalcomments'] . " $plural";
-                }
-                if (count($moreinfo) > 0) {
-                    print "<small>(" . implode (', ', $moreinfo) . ") </small>";
-                }
-            } else {
-                // Nothing in this item, so no link.
-                print '<strong>' . $row['body'] . '</strong>';
-            }
-            if (isset($row['excerpt'])) {
-                print "<br>\n\t\t\t\t\t<span class=\"excerpt-debates\">" . trim_characters($row['excerpt'], 0, 200) . "</span>";
-            }
-        }
-        print '</ul>';
-    }
-
-    if ($individual_item) {
-        # XXX
-        global $PAGE;
-        $comments['object']->display('ep', $comments['args']);
-        $PAGE->comment_form($comments['commentdata']);
-        # XXX COMMENT SIDEBAR SHOULD GO HERE IF LOGGED IN
+    if ($individual_item) { ?>
+        <div class="debate-comments">
+            <div class="full-page__row">
+            <?php
+                # XXX
+                global $PAGE;
+                $comments['object']->display('ep', $comments['args']);
+                $PAGE->comment_form($comments['commentdata']);
+                # XXX COMMENT SIDEBAR SHOULD GO HERE IF LOGGED IN
+            ?>
+            </div>
+        </div>
+        <?php
     }
 
 ?>
