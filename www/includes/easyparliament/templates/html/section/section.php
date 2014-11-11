@@ -205,17 +205,23 @@
             // Video
             if ($data['info']['major'] == 1 && !$individual_item) { # Commons debates only
                 if ($speech['video_status']&4) { ?>
-                    <a href="<?= $speech['commentsurl'] ?>" class="watch" onclick="return moveVideo(\'debate/'<?= $speech['gid'] ?>\');">Watch this</a>
+                    <a href="<?= $speech['commentsurl'] ?>" class="watch debate-speech__meta__link" onclick="return moveVideo(\'debate/'<?= $speech['gid'] ?>\');">Watch this</a>
                 <?php
                 } elseif (!$speech['video'] && $speech['video_status']&1 && !($speech['video_status']&8)) {
                     $gid_type = $data['info']['major'] == 1 ? 'debate' : 'lords'; ?>
-                    <a href="/video/?from=debate&amp;gid=<?= $gid_type ?>/<?= $speech['gid'] ?>" class="timestamp">Video match this</a>
+                    <a href="/video/?from=debate&amp;gid=<?= $gid_type ?>/<?= $speech['gid'] ?>" class="timestamp debate-speech__meta__link">Video match this</a>
                 <?php
                 }
             }
 
-            if (isset($speech['video'])) {
+            if (isset($speech['video']) && $speech['video']) {
+                ?>
+                <div class="debate__video-wrapper">
+                <?php
                 echo $speech['video'];
+                ?>
+                </div>
+                <?php
             }
 
             # XXX
