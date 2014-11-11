@@ -382,7 +382,7 @@ window.fbAsyncInit = function () {
                         <noscript>
 
                             <a href="http://www.mysociety.org/projects/?cs=1" title="View all mySociety's projects">More mySociety projects...</a>&nbsp;&nbsp;
-                            <a href="https://secure.mysociety.org/admin/lists/mailman/listinfo/news?cs=1" title="mySociety newsletter - about once a month">mySociety newsletter</a>
+                            <a href="http://mysociety.us9.list-manage1.com/subscribe?u=53d0d2026dea615ed488a8834&id=287dc28511" title="mySociety newsletter - about once a month">mySociety newsletter</a>
                         </noscript>
                     </li>
                 </ul>
@@ -522,6 +522,14 @@ window.fbAsyncInit = function () {
         );
 
         $highlights = $this->menu_highlights();
+
+        if ($highlights['section'] == 'scotland') {
+            print '<p class="informational all">Due to changes made to the official Scottish Parliament, our parser that used to fetch their web pages and convert them into more structured information has stopped working. We&rsquo;re afraid we cannot give a timescale as to when we will be able to cover the Scottish Parliament again. Sorry for any inconvenience caused.</p>';
+        }
+
+        if ($highlights['section'] == 'ni') {
+            print '<p class="informational all">Due to changes made to the official Northern Ireland Assembly website, the tool we used to fetch their web pages and convert them into more structured information has stopped working. We&rsquo;re afraid we cannot give a timescale as to when we will be able to cover the Northern Ireland Assembly again. Sorry for any inconvenience caused.</p>';
+        }
 
         //get the top and bottom links
         $top_links = array();
@@ -1026,7 +1034,7 @@ window.fbAsyncInit = function () {
 
                 global $DATA, $this_page;
 
-                $about_links = $this->get_menu_links(array ('help', 'about', 'linktous', 'houserules', 'blog', 'news', 'contact', 'topic'));
+                $about_links = $this->get_menu_links(array ('help', 'about', 'linktous', 'houserules', 'blog', 'news', 'contact', 'topic', 'privacy'));
                 $assembly_links = $this->get_menu_links(array ('hansard', 'sp_home', 'ni_home', 'wales_home', 'boundaries'));
                 $international_links = $this->get_menu_links(array ('newzealand', 'australia', 'ireland'));
                 $tech_links = $this->get_menu_links(array ('code', 'api', 'data', 'devmailinglist', 'irc'));
@@ -1159,10 +1167,12 @@ window.fbAsyncInit = function () {
                   If you find it useful, please <a href="http://www.mysociety.org/donate/">donate</a> to keep it running.
                       </p>
                       <h5>Sign up to our newsletter</h5>
-                      <form method="post" action="https://secure.mysociety.org/admin/lists/mailman/subscribe/news">
-                          <input type="text" name="email">
-                          <input type="submit" value="Join">
-                          <div style="display:none;">Please don't fill in this box: <input type="text" name="username"></div>
+                        <form method="post" action="//mysociety.us9.list-manage.com/subscribe/post?u=53d0d2026dea615ed488a8834&id=287dc28511">
+                          <input type="email" placeholder="Your email address" name="EMAIL"/>
+                          <label style="position: absolute; left: -5000px;">
+                              Leave this box empty: <input type="text" name="b_53d0d2026dea615ed488a8834_287dc28511" tabindex="-1" value="" />
+                          </label>
+                          <input type="submit" value="Subscribe" name="subscribe"/>
                       </form>
                       <p>
                           Approximately once a month, spam free.

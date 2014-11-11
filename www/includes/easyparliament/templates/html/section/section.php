@@ -57,8 +57,16 @@
     if ($speech['htype'] == 12) {
         if ($hansardmajors[$data['info']['major']]['location'] == 'Scotland') {
             $body = preg_replace('# (S\d[O0WF]-\d+)[, ]#', ' <a href="/spwrans/?spid=$1">$1</a> ', $body);
-            $body = preg_replace('#<citation id="uk\.org\.publicwhip/(.*?)/(.*?)">\[(.*?)\]</citation>#e',
-                "'[<a href=\"/' . ('$1'=='spor'?'sp/?g':('$1'=='spwa'?'spwrans/?':'debates/?')) . 'id=$2' . '\">$3</a>]'",
+            $body = preg_replace_callback('#<citation id="uk\.org\.publicwhip/(.*?)/(.*?)">\[(.*?)\]</citation>#', function($matches) {
+                   if ($matches[1] == 'spor') {
+                       $href_segment = 'sp/?g';
+                   } elseif ($matches[1] == 'spwa') {
+                        $href_segment = 'spwrans/?';
+                    } else {
+                        $href_segment = 'debates/?';
+                    }
+                    return '[<a href="' . $href_segment . 'id=' . $matches[2] . '\">' . $matches[3] . '</a>]';
+                },
                 $body);
             $body = str_replace('href="../../../', 'href="http://www.scottish.parliament.uk/', $body);
         }
