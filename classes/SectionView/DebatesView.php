@@ -159,7 +159,7 @@ class DebatesView extends SectionView {
 
     private function video_sidebar($row, $heading_hpos, $count) {
         include_once INCLUDESPATH . 'easyparliament/video.php';
-        $db = new ParlDB;
+        $db = new \ParlDB;
         if ($this->major == 1) {
             $gid_type = 'debate';
         } elseif ($this->major == 101) {

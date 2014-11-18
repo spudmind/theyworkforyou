@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 span.hi {
     background: #ff3;
 }
@@ -150,8 +152,9 @@ span.hi {
   color: #9d9195;
 
   @media (min-width: $medium-screen) {
-    display: inline;
+    display: inline-block;
     margin: 0 0 0 5px;
+    max-width: 36em;
   }
 }
 
@@ -203,13 +206,13 @@ span.hi {
       margin-left: 0.5em;
     }
     &:before {
-      background-position: 0 0;
+      background-position: -1px -1px;
     }
   }
 
   &.link {
     &:before {
-      background-position: -11px 0;
+      background-position: -13px -1px;
       width: 14px;
     }
   }
@@ -220,30 +223,33 @@ span.hi {
 
   &.watch {
     &:before {
-      background-position: -36px 0;
+      background-position: -40px -1px;
     }
   }
 
   @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+
     &:before {
-      background-size: 48px; // 48px width, auto height
+      background-size: 49px; // 49px width, auto height
+      width: 12px;
+      height: 12px;
     }
 
     &.time {
       &:before {
-        background-position: 0 -5.5px;
+        background-position: -0.5px -6px;
       }
     }
 
     &.link {
       &:before {
-        background-position: -11px -5.5px;
+        background-position: -12px -6px;
       }
     }
 
     &.watch {
       &:before {
-        background-position: -36px -5.5px;
+        background-position: -38px -6px;
       }
     }
   }
@@ -251,14 +257,14 @@ span.hi {
 
 .link-to-hansard {
   a:before {
-    background-position: -25px 0;
+    background-position: -28px -1px;
   }
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
   .link-to-hansard {
     a:before {
-      background-position: -25px -5.5px;
+      background-position: -26px -5px;
     }
   }
 }

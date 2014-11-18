@@ -174,24 +174,21 @@
                     <strong class="debate-speech__speaker__name"><?= $speaker_name ?></strong>
                     <small class="debate-speech__speaker__position"><?= $speaker_position ?></small>
                 </a>
-            </h2>
-            <?php if (!isset($previous_speech_time) || $previous_speech_time != $speech['htime']) { ?>
-                <div class="debate-speech__meta">
-                    <div class="time">
-                        <a href="<?= $speech['listurl'] ?>">
-                          <?php if ($speech['htime']) { ?>
-                            <?= format_time($speech['htime'], 'g:i a') ?>,
-                          <?php } ?>
-                            <?= format_date($speech['hdate'], 'jS F Y') ?>
-                        </a>
-                    </div>
-                </div>
+                <?php if (!isset($previous_speech_time) || $previous_speech_time != $speech['htime']) { ?>
+                    <a href="<?= $speech['listurl'] ?>" class="debate-speech__meta__link time">
+                      <?php if ($speech['htime']) { ?>
+                        <?= format_time($speech['htime'], 'g:i a') ?>,
+                      <?php } ?>
+                        <?= format_date($speech['hdate'], 'jS F Y') ?>
+                    </a>
               <?php } ?>
+            </h2>
 
               <?php # XXX
                 if ($data['info']['major'] == 8 && preg_match('#\d{4}-\d\d-\d\d\.(.*?)\.q#', $speech['gid'], $m)) {
                     print " | Question $m[1]";
                 } ?>
+
 
           <?php } ?>
             <div class="debate-speech__content"><?=$body ?></div>
