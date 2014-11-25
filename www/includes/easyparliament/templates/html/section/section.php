@@ -96,9 +96,10 @@
 
     # TODO Do in the view, not in the template
     $source_url = '';
+    $source_text = "Hansard source";
+    $source_title = '';
     if (isset($speech['source_url']) && $speech['source_url'] != '') {
         $source_url = $speech['source_url'];
-        $source_title = '';
         $major = $data['info']['major'];
         if ($major==1 || $major==2 || (($major==3 || $major==4) && isset($speech['speaker']['house'])) || $major==101 || $major==6) {
             $source_title = 'Citation: ';
@@ -124,7 +125,6 @@
                 $source_title .= 'WS';
             }
         }
-        $source_text = "Hansard source";
         if ($hansardmajors[$data['info']['major']]['location']=='Scotland'){
             $source_text = 'Official Report source';
         }
