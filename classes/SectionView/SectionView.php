@@ -158,7 +158,10 @@ class SectionView {
             // And glossary phrases
             twfy_debug_timestamp('Before glossarise');
 
-            $bodies = $GLOSSARY->glossarise($bodies, $data['info']['glossarise']);
+            if (isset($GLOSSARY)) {
+                $bodies = $GLOSSARY->glossarise($bodies, $data['info']['glossarise']);
+            }
+
             twfy_debug_timestamp('After glossarise');
         }
         if ($SEARCHENGINE) {
@@ -174,6 +177,8 @@ class SectionView {
         for ($i=0; $i<count($data['rows']); $i++) {
             $row = $data['rows'][$i];
             $htype = $row['htype'];
+            // HPOS should be defined below if it's needed; otherwise default to 0
+            $heading_hpos = 0;
             if ($htype == 10) {
                 $data['section_title'] = $row['body'];
                 $heading_hpos = $row['hpos'];
