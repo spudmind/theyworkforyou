@@ -44,7 +44,7 @@ class SpwransView extends WransView {
         $PAGE->error_message ("Couldn't match that Scottish Parliament ID to a GID.");
     }
 
-    function get_question_mentions_html($row_data) {
+    protected function get_question_mentions_html($row_data) {
         if( count($row_data) == 0 ) {
             return '';
         }
