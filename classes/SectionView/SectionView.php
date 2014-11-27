@@ -80,7 +80,6 @@ class SectionView {
             'gid' => get_http_var('id'),
             's' => get_http_var('s'), // Search terms to be highlighted.
             'member_id' => get_http_var('m'), // Member's speeches to be highlighted.
-            'glossarise' => 1 // Glossary is on by default
         );
 
         if (preg_match('/speaker:(\d+)/', get_http_var('s'), $mmm)) {
@@ -146,18 +145,15 @@ class SectionView {
             #$body = preg_replace('#<phrase class="offrep" id="((.*?)/(\d+)-(\d+)-(\d+)\.(.*?))">(.*?)</phrase>#e', "\"<a href='/search/?pop=1&amp;s=date:$3$4$5+column:$6+section:$2&amp;match=$1'>\" . str_replace('Official Report', 'Hansard', '$7') . '</a>'", $body);
             $bodies[] = $body;
         }
-        if (!empty($args['glossarise'])) {
+
+        // Do all this unless the glossary is turned off in the URL
+        if (get_http_var('ug') != 1) {
             // And glossary phrases
             twfy_debug_timestamp('Before glossarise');
 
-            // Glossary can be turned off in the url
-            if (get_http_var('ug') == 1) {
-                $args['glossarise'] = 0;
-            } else {
-                $args['sort'] = "regexp_replace";
-                $GLOSSARY = new \GLOSSARY($args);
-                $bodies = $GLOSSARY->glossarise($bodies, $args['glossarise']);
-            }
+            $args['sort'] = "regexp_replace";
+            $GLOSSARY = new \GLOSSARY($args);
+            $bodies = $GLOSSARY->glossarise($bodies, 1);
 
             twfy_debug_timestamp('After glossarise');
         }
