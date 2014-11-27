@@ -2383,13 +2383,6 @@ class HANSARDLIST {
             $data['info']['searchstring'] = $args['s'];
         }
 
-        // Shall we turn glossarising on?
-        if (isset($args['glossarise']) && $args['glossarise']) {
-            // We have some search term words that we could highlight
-            // when rendering.
-            $data['info']['glossarise'] = $args['glossarise'];
-        }
-
         // Get the section and subsection headings for this item.
         $sectionrow = $this->_get_section($itemdata);
         $subsectionrow = $this->_get_subsection($itemdata);

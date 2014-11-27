@@ -87,14 +87,6 @@ class SectionView {
             $args['person_id'] = $mmm[1];
         }
 
-        // Glossary can be turned off in the url
-        if (get_http_var('ug') == 1) {
-            $args['glossarise'] = 0;
-        } else {
-            $args['sort'] = "regexp_replace";
-            $GLOSSARY = new \GLOSSARY($args);
-        }
-
         try {
             $data = $this->list->display('gid', $args, 'none');
         } catch (\RedirectException $e) {
@@ -154,12 +146,17 @@ class SectionView {
             #$body = preg_replace('#<phrase class="offrep" id="((.*?)/(\d+)-(\d+)-(\d+)\.(.*?))">(.*?)</phrase>#e', "\"<a href='/search/?pop=1&amp;s=date:$3$4$5+column:$6+section:$2&amp;match=$1'>\" . str_replace('Official Report', 'Hansard', '$7') . '</a>'", $body);
             $bodies[] = $body;
         }
-        if (isset($data['info']['glossarise']) && $data['info']['glossarise']) {
+        if (!empty($args['glossarise'])) {
             // And glossary phrases
             twfy_debug_timestamp('Before glossarise');
 
-            if (isset($GLOSSARY)) {
-                $bodies = $GLOSSARY->glossarise($bodies, $data['info']['glossarise']);
+            // Glossary can be turned off in the url
+            if (get_http_var('ug') == 1) {
+                $args['glossarise'] = 0;
+            } else {
+                $args['sort'] = "regexp_replace";
+                $GLOSSARY = new \GLOSSARY($args);
+                $bodies = $GLOSSARY->glossarise($bodies, $args['glossarise']);
             }
 
             twfy_debug_timestamp('After glossarise');
