@@ -49,7 +49,7 @@ Future stuff...
 
 */
 
-class RedirectException extends Exception { }
+class RedirectException extends \Exception { }
 
 class HANSARDLIST {
     // This will be used to cache information about speakers on this page
